@@ -182,35 +182,35 @@ The brief required at least 3 tests: valid creation, invalid title, forbidden tr
 - Derived query findByStatus: Spring Data generates the SQL from the method name.
 - Status transitions enforced in the service layer via an exhaustive switch, so adding a new status later forces a compile-time update.
 
-## Temps passé
+## Time spent
 
 Total: about 4 hours, spread over a few sessions.
 
-- Setup (project skeleton, pom, dependencies): ~30 min
+- Setup (project skeleton, pom.xml, dependencies): ~30 min
 - Model + repository + DTOs: ~30 min
 - Service + controller: ~45 min
 - Exception handling + validation: ~30 min
 - PATCH endpoint + transition rules + 409 handling: ~30 min
-- Tests (14): ~45 min
+- Tests (14 total): ~45 min
 - README and cleanup: ~30 min
 
-## Limites / ce qui reste à faire
+## Limitations and what is left to do
 
-- No pagination on GET /tasks. For a small dataset it is fine, but a production version would add page/size parameters.
-- No authentication / authorization, as per the brief.
-- No update timestamp (createdAt / updatedAt) on Task. Easy to add with @CreationTimestamp and @UpdateTimestamp if needed.
-- The transition rule is a strict linear chain. If a future requirement allows reopening a DONE task, only the switch in TaskService.isAllowedTransition needs changing.
-- Tests use the real H2 database (not mocks), which is slower but verifies the full stack.
+- No pagination on GET /tasks. For a small dataset it is fine; a production version would add page/size parameters.
+- No authentication or authorization, as per the brief.
+- No createdAt / updatedAt timestamps on Task. Easy to add later with @CreationTimestamp and @UpdateTimestamp.
+- The transition rule is a strict linear chain. If a future requirement allows reopening a DONE task, only the switch inside TaskService.isAllowedTransition needs to change.
+- Tests use the real H2 database (not mocks). Slower, but it verifies the full stack end-to-end.
 - No Docker or CI pipeline. Not required, and out of scope for this exercise.
 
-## Utilisation de l'IA
+## AI usage
 
-In accordance with the brief ("Documentation et IA autorisées : indiquez leur utilisation"), here is the AI usage statement:
+The brief allows AI assistance as long as its use is declared and the candidate can explain the code. This section declares it.
 
 - An AI assistant (LLM) was used to help structure the project, review the code, and generate the initial test scaffolding.
-- All code has been read, executed, and verified locally: ./mvnw clean test passes with 14 tests green.
+- Every file has been read, executed, and verified locally. ./mvnw clean test passes with 14 tests green.
 - All endpoints were manually exercised with curl and the Bruno API client.
-- The AI did not generate the domain logic blindly: the status transition rules and the 409 handling were written based on the brief and verified against it.
+- The status transition rules and the 409 handling were written from the brief and verified against it - not generated blindly.
 - No secrets, credentials, real user data, or confidential code were shared with the AI.
 - All test data is fictional.
 - I am able to explain and modify any part of this code during the follow-up interview.
