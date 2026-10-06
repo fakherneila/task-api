@@ -2,6 +2,7 @@ package com.fakher.taskapi.controller;
 
 import com.fakher.taskapi.dto.CreateTaskRequest;
 import com.fakher.taskapi.dto.TaskResponse;
+import com.fakher.taskapi.dto.UpdateStatusRequest;
 import com.fakher.taskapi.dto.UpdateTaskRequest;
 import com.fakher.taskapi.model.TaskStatus;
 import com.fakher.taskapi.service.TaskService;
@@ -24,8 +25,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<TaskResponse> create(@Valid @RequestBody CreateTaskRequest req) {
-        var created = service.create(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(TaskResponse.from(created));
+        return ResponseEntity.status(HttpStatus.CREATED).body(TaskResponse.from(service.create(req)));
     }
 
     @GetMapping
@@ -41,6 +41,11 @@ public class TaskController {
     @PutMapping("/{id}")
     public TaskResponse update(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest req) {
         return TaskResponse.from(service.update(id, req));
+    }
+
+    @PatchMapping("/{id}/status")
+    public TaskResponse changeStatus(@PathVariable Long id, @Valid @RequestBody UpdateStatusRequest req) {
+        return TaskResponse.from(service.changeStatus(id, req.getStatus()));
     }
 
     @DeleteMapping("/{id}")

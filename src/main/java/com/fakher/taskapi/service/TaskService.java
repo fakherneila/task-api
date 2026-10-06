@@ -44,10 +44,24 @@ public class TaskService {
         if (req.getDescription() != null) {
             task.setDescription(req.getDescription());
         }
-        if (req.getStatus() != null) {
-            task.setStatus(req.getStatus());
-        }
         return repository.save(task);
+    }
+
+    public Task changeStatus(Long id, TaskStatus newStatus) {
+        Task task = findById(id);
+        if (!isAllowedTransition(task.getStatus(), newStatus)) {
+            throw new TransitionNotAllowedException(task.getStatus(), newStatus);
+        }
+        task.setStatus(newStatus);
+        return repository.save(task);
+    }
+
+    private boolean isAllowedTransition(TaskStatus from, TaskStatus to) {
+        return switch (from) {
+            case TODO -> to == TaskStatus.IN_PROGRESS;
+            case IN_PROGRESS -> to == TaskStatus.DONE;
+            case DONE -> false;
+        };
     }
 
     public void delete(Long id) {
