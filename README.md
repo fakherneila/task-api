@@ -209,7 +209,7 @@ The brief allows AI assistance as long as its use is declared and the candidate 
 
 - An AI assistant (LLM) was used to help structure the project, review the code, and generate the initial test scaffolding.
 - Every file has been read, executed, and verified locally. ./mvnw clean test passes with 14 tests green.
-- All endpoints were manually exercised with curl and the Bruno API client.
+- All endpoints were manually exercised with curl and the Postman.
 - The status transition rules and the 409 handling were written from the brief and verified against it - not generated blindly.
 - No secrets, credentials, real user data, or confidential code were shared with the AI.
 - All test data is fictional.
